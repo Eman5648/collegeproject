@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{%  static 'single.css' %}">
+<link rel="stylesheet" type="text/css" href="{%  static 'base.css' %}">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>eCommerce Product Detail</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="">
+    <div class="pl-5 pr-5">
+      <div class="container-fliud">
+        <div class="wrapper row">
+          <div class="preview col-md-6">
+
+            <div class="preview-pic tab-content">
+              <div class="tab-pane active" id="pic-1"><img src="{% if product.image %}
+                {{ product.image.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" height="600px"/></div>
+              <div class="tab-pane" id="pic-2"><img src="{% if product.image2 %}
+                {{ product.image2.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}"height="600px"/></div>
+              <div class="tab-pane" id="pic-3"><img src="{% if product.image3 %}
+                {{ product.image3.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" height="600px"/></div>
+              <div class="tab-pane" id="pic-4"><img src="{% if product.image4 %}
+                {{ product.image4.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" height="600px"/></div>
+              <div class="tab-pane" id="pic-5"><img src="{% if product.image5 %}
+                {{ product.image5.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" height="600px"/></div>
+            </div>
+            <ul class="preview-thumbnail nav nav-tabs">
+              <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{% if product.image %}
+                {{ product.image.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" /></a></li>
+              <li><a data-target="#pic-2" data-toggle="tab"><img src="{% if product.image2 %}
+                {{ product.image2.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" /></a></li>
+              <li><a data-target="#pic-3" data-toggle="tab"><img src="{% if product.image3 %}
+                {{ product.image3.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" /></a></li>
+              <li><a data-target="#pic-4" data-toggle="tab"><img src="{% if product.image4 %}
+                {{ product.image4.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" /></a></li>
+              <li><a data-target="#pic-5" data-toggle="tab"><img src="{% if product.image5 %}
+                {{ product.image5.url }}
+                {% else %}
+                  {% static 'img/no_image.png' %}
+                {% endif %}" /></a></li>
+            </ul>
+
+          </div>
+          <div class="details col-md-6">
+            <h3 class="product-title">{{ product.name}}</h3>
+            <div class="rating">
+              <div class="stars">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </div>
+              <span class="review-no">41 reviews</span>
+            </div>
+            <p class="product-description">{{ product.description }}</p>
+            <h4 class="price">current price: <span>€{{ product.price }}</span></h4>
+            <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+            {% if product.variation_set.all %}
+            <h1>Size</h1>
+            <select class="form-sontrol" name="size" id="">
+              {% for item in product.variation_set.size %}
+              <option value="{{ item.id }}">{{ item.title|capfirst }}</option>
+              {% endfor %}
+            </select>
+            {% endif %}
+            <h5 class="colors">colors:
+              <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+              <span class="color green"></span>
+              <span class="color blue"></span>
+            </h5>
+            <div class="action">
+              <form action="{% url 'cart:cart_add' product.id %}" method="post" class="">
+                <div class="pr-5">{{ cart_product_form | crispy }}</div>
+                {% csrf_token %}
+                <input type="submit" value="Add to cart" class="glyphicon glyphicon-shopping-cart">
+              </form>
+              <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<footer class="page-footer mt-5 font-small indigo col-sm-12 bg-dark text-white">
+
+  <!-- Footer Links -->
+  <div class="container ">
+
+    <!-- Grid row-->
+    <div class="row text-center d-flex justify-content-center pt-5 mb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#!">About us</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#!">Products</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#!">Awards</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href="#!">Help</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-2 mb-3">
+        <h6 class="text-uppercase font-weight-bold">
+          <a href=http://127.0.0.1:8000/contact/contactform>Contact</a>
+        </h6>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+    <hr class="rgba-white-light" style="margin: 0 15%;">
+
+    <!-- Grid row-->
+    <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
+
+      <!-- Grid column -->
+      <div class="col-md-8 col-12 mt-5">
+        <p style="line-height: 1.7rem">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem
+          aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+          explicabo.
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+    <hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
+
+    <!-- Grid row-->
+    <div class="row pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-12">
+
+        <div class="mb-5 flex-center">
+
+          <!-- Facebook -->
+          <a class="fb-ic">
+            <i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic">
+            <i class="fab fa-twitter fa-lg white-text mr-4"> </i>
+          </a>
+          <!-- Google +-->
+          <a class="gplus-ic">
+            <i class="fab fa-google-plus-g fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Linkedin -->
+          <a class="li-ic">
+            <i class="fab fa-linkedin-in fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Instagram-->
+          <a class="ins-ic">
+            <i class="fab fa-instagram fa-lg white-text mr-4"> </i>
+          </a>
+          <!--Pinterest-->
+          <a class="pin-ic">
+            <i class="fab fa-pinterest fa-lg white-text"> </i>
+          </a>
+
+        </div>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Thank you
+{% endblock %}
+
+{% block content %}
+<header>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="">
+      <link href="{% static 'base.css' %}" rel="stylesheet">
+</header>
+<div class="container-fluid con">
+    <h1 class="">Thank you</h1>
+    <p class="">Your order has been successfully completed. Your order number is
+    <strong>{{ order.id }}</strong>.</p>
+</div>
+<style type="text/css">
+    .con {
+  
+      background-image: url('/static/62.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+{% endblock %}
